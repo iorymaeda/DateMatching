@@ -1,6 +1,6 @@
+*.png
 !Pipeline.png
 
-*.png
 *.jpg
 *.pkl
 *.torch
@@ -10,6 +10,8 @@ env.py
 
 logs/
 tg_data/
+# data/
+# markup/
 
 *.py[cod]
 *$py.class
