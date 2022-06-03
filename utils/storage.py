@@ -89,8 +89,6 @@ class PhotoEmbedingStorage:
             for number of returned embedding, N - embedding from N+1 model.
             default: 0
         """
-        print(item)
-        
         if isinstance(item, tuple):
             key, n = item
         else:
