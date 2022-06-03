@@ -1,5 +1,6 @@
 *.png
 !Pipeline.png
+!Docker.png
 
 *.jpg
 *.pkl

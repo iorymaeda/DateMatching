@@ -3,7 +3,9 @@
 In this project i build app that choosing girls based on their looks. **Just for educational purposes.** 
 
 <br><img src="Pipeline.png"></br>
+<br><img src="Docker.png"></br>
 
+### Data stracture
 ```bash
 data
 ├── markup_opposite
