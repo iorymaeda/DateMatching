@@ -1,13 +1,15 @@
 *.png
-!Pipeline.png
-!Docker.png
-
 *.jpg
 *.pkl
 *.torch
 *.dict
 *.html
+*.session
 env.py
+
+!Pipeline.png
+!Docker.png
+
 
 logs/
 tg_data/

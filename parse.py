@@ -129,4 +129,4 @@ if __name__ == "__main__":
         procces_markup('markup/target',  "data/markup_target/")
         procces_markup('markup/opposite',  "data/markup_opposite/")
 
-    embeder.save('emb storage.pkl')
+    embeder.save('models/emb storage.pkl')
