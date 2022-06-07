@@ -4,6 +4,7 @@ import torch
 import numpy as np
 
 
+
 class PhotoEmbedingStorage:
     """This storage class contains 
     primary photo path+name: generated unique id 
@@ -126,3 +127,5 @@ class PhotoEmbedingStorage:
             msg+= f"{self.path_id[key]}: {key}"
             msg+= "\n"
         return msg
+
+
