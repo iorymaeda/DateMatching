@@ -5,3 +5,4 @@ torchmetrics==0.8.2
 pyrogram==2.0.24
 torchserve==0.6.0
 torch-model-archiver==0.6.0
+tabulate==0.8.9

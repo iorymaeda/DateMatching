@@ -1,1 +1,0 @@
-tensorboard --logdir C:/Projects/DateMatching/logs/fit

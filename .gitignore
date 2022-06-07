@@ -5,12 +5,13 @@
 *.dict
 *.html
 *.session
+*.session-journal
 env.py
 
 !Pipeline.png
 !Docker.png
 
-
+serve/
 logs/
 tg_data/
 # data/
