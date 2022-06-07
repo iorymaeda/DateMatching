@@ -1,3 +1,6 @@
+"""Handler for torchserve
+ref: https://github.com/pytorch/serve/blob/master/ts/torch_handler/base_handler.py"""
+
 import os
 import pickle
 from abc import ABC
@@ -11,6 +14,7 @@ class CustomHandler(BaseHandler, ABC):
         super(CustomHandler, self).__init__()
         self.initialized = False
 
+        raise NotImplementedError
 
     def initialize(self, ctx):
         for _ in range(1000):

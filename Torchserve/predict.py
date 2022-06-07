@@ -1,3 +1,5 @@
+"""This script load all photo in current dir, pocces and predict beauty score"""
+
 import os
 import pickle
 import argparse
