@@ -1,0 +1,1 @@
+docker build -t predict_and_burn .

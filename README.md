@@ -16,12 +16,13 @@ intsall [torchserve image](https://github.com/pytorch/serve/tree/master/docker)
 
 1. build the image
     ```
-    $ docker build -t predict_and_burn
+    $ docker build -t predict_and_burn .
     ```
 
 2. run
     ```
-    $ docker run --rm --name beauty_recognition predict_and_burn
+    $ docker run --rm --name beauty_recognition -v <host_dir>:/usr/src/app/Torchserve
+    predict_and_burn 
     ```
 
 ### Notes: 
