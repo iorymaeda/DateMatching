@@ -27,20 +27,22 @@ intsall [torchserve image](https://github.com/pytorch/serve/tree/master/docker)
 
 ### Notes: 
 1. Currently just parse Torchserve folder predict and wire scores in score.txt
-
+```
 Project_dir
 └──Torchserve
    ├── predict.py
    ├── Score.txt
    └──...
+```
 
 2. You can  build your own model.
 Just put the data in the right folders ( [see this](Train/README.md) ) and run train script
-
+```
 Project_dir
 └──Train
    ├──train.py
    └──...
+```
 
 ### Todo
 
