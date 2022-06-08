@@ -3,7 +3,6 @@
 import os
 import pickle
 import argparse
-from wsgiref import headers
 from tabulate import tabulate
 
 import torch
