@@ -1,1 +1,1 @@
-docker run --rm --name beauty_recognition -v C:/Projects/DateMatching/Torchserve:/usr/src/app/Torchserve
+docker run --rm --name beauty_recognition -v C:/Projects/DateMatching/Torchserve:/usr/src/app/Torchserve predict_and_burn

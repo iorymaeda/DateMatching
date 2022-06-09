@@ -4,6 +4,7 @@
 
 ### Data stracture
 
+
 ```bash
 data
 ├── markup_opposite
@@ -32,6 +33,7 @@ data
     └──...
 ```
 
+Put raw photo to this, and then they will be parsed
 ```bash
 markup
 ├── opposite

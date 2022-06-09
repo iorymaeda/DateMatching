@@ -21,8 +21,7 @@ intsall [torchserve image](https://github.com/pytorch/serve/tree/master/docker)
 
 2. run
     ```
-    $ docker run --rm --name beauty_recognition -v <host_dir>:/usr/src/app/Torchserve
-    predict_and_burn 
+    $ docker run --rm --name beauty_recognition -v <host_dir>:/usr/src/app/Torchserve predict_and_burn 
     ```
 
 ### Notes: 
