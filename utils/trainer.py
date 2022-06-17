@@ -45,11 +45,7 @@ class Trainer:
         return running_loss
             
             
-    def val(self, dataset):
-        """Predict dataset
-        :param dataset: dataset to predict 
-        :type dataset: torch.utils.data.DataLoader
-        :returns: tuple with two torch.Tensor pred, true"""
+    def val(self, dataset) -> list[torch.Tensor]:
         self.model.eval()
         val_pred, val_true = [], []
         with torch.inference_mode():

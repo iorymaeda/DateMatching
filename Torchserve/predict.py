@@ -59,7 +59,7 @@ if __name__ == "__main__":
         exit()
 
     with torch.no_grad():
-        imgs_cropped: list = []
+        imgs_cropped: list[torch.Tensor] = []
 
         for img in imgs:
             cropped = mtcnn(img[0], save_path='tmp.png')
