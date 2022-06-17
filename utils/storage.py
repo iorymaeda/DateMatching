@@ -58,10 +58,11 @@ class PhotoEmbedingStorage:
         return len(self.path_id)
     
     
-    def __setitem__(self, key: str, value: list[np.ndarray|torch.Tensor]):
+    def __setitem__(self, key: str, value):
         """Put embeddings in storage
         :param key: primary photo path+name
         :param value: list with embeddings from models
+        :type value: list[np.ndarray|torch.Tensor]
         """
         assert isinstance(key, str)
         assert isinstance(value, list)
@@ -81,7 +82,7 @@ class PhotoEmbedingStorage:
         self.id_embs[uid] = value
         
     
-    def __getitem__(self, item: tuple[int|str, int]) -> np.ndarray:
+    def __getitem__(self, item) -> np.ndarray:
         """Get embeddings from storage
         if item is tuple, there are key and n
         :param key: id or primary path
@@ -127,5 +128,3 @@ class PhotoEmbedingStorage:
             msg+= f"{self.path_id[key]}: {key}"
             msg+= "\n"
         return msg
-
-

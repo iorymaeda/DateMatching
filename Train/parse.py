@@ -11,20 +11,20 @@ from facenet_pytorch import MTCNN, InceptionResnetV1
 import utils
 
 
-def get_name(body: html.HtmlElement) -> str|None:
+def get_name(body: html.HtmlElement) -> str:
     with suppress(Exception):
         name = body.find_class('from_name')[0].text
         name = name.replace('\n', '').strip()
         return name
 
-def get_photo(body: html.HtmlElement) -> str|None:
+def get_photo(body: html.HtmlElement) -> str:
     with suppress(Exception):
         div = body.find_class('media_wrap')[0]
         a = div.getchildren()[0]
         photo = a.attrib['href']
         return photo
 
-def get_text(body: html.HtmlElement, text="") -> str|None:
+def get_text(body: html.HtmlElement, text="") -> str:
     with suppress(Exception):
         div = body.find_class('text')[0]
         for t in div.itertext():
@@ -74,7 +74,18 @@ def procces_markup(src:str, dst:str):
         process_photo(photo_path, dst)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
+    import os
+    import sys
+    import inspect
+
+    # Import from parent directory
+    currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    parentdir = os.path.dirname(currentdir)
+    sys.path.insert(0, parentdir) 
+    import utils
+
+
     mtcnn = MTCNN()
     model1 = InceptionResnetV1(pretrained='vggface2').eval()
     model2 = InceptionResnetV1(pretrained='casia-webface').eval()
