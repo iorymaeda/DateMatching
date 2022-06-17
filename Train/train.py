@@ -169,6 +169,6 @@ if __name__ == "__main__":
     model.load_state_dict(checkpoint['model'])
 
     test_pred, test_true = trainer.val(testLoader)
-    print('AUC:', auc(val_pred.sigmoid(), val_true.int()))
-    print('ACC:', acc(val_pred.sigmoid(), val_true.int()))
+    print('AUC:', auc(test_pred.sigmoid(), test_true.int()))
+    print('ACC:', acc(test_pred.sigmoid(), test_true.int()))
     torch.save(checkpoint, f'../Models/w/prod.torch')
