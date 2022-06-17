@@ -8,8 +8,8 @@
 *.session-journal
 env.py
 
-!Pipeline.png
-!Docker.png
+!img/*
+
 
 serve/
 logs/
