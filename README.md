@@ -2,12 +2,13 @@
 
 In this project i build app that choosing girls based on my taste. **Just for educational purposes.**
 
-At this moment this is an irreproducible project
+At this moment this is an irreproducible project, and just parse Torchserve folder and predict (on my pc)
 
+<br><img src="img/docker job.png">
 <!-- <br><img src="Pipeline.png"> -->
 
 ### Architecture
-<br><img src="Docker.png">
+<br><img src="img/Docker.png">
 
 
 ### Usage
@@ -25,7 +26,7 @@ intsall [torchserve image](https://github.com/pytorch/serve/tree/master/docker)
     ```
 
 ### Notes: 
-1. Currently just parse Torchserve folder predict and wire scores in score.txt
+1. Currently just parse Torchserve folder predict and write scores in score.txt
 ```
 Project_dir
 └──Torchserve
