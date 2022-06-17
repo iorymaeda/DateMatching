@@ -12,9 +12,6 @@ At this moment this is an irreproducible project, and just parse Torchserve fold
 
 
 ### Usage
-
-intsall [torchserve image](https://github.com/pytorch/serve/tree/master/docker)
-
 1. build the image
     ```
     $ docker build -t predict_and_burn .
