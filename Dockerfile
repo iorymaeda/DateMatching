@@ -1,5 +1,6 @@
-FROM anibali/pytorch:1.11.0-cuda11.5-ubuntu20.04
+FROM anibali/pytorch:1.11.0-cuda11.5-ubuntu20.04 as builder
 
+FROM python:3.10
 
 USER root
 RUN mkdir -p /usr/src/app
