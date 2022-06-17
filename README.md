@@ -1,6 +1,6 @@
 ### Date matching
 
-In this project i build app that choosing girls based on my taste. **Just for educational purposes.**
+In this project i build app that choosing girls based on my taste in @leomatchbot telegram bot. **Just for educational purposes.**
 
 At this moment this is an irreproducible project, and just parse Torchserve folder and predict (on my pc)
 
