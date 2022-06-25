@@ -10,6 +10,7 @@ from PIL import Image
 from sklearn.decomposition import PCA
 from facenet_pytorch import MTCNN, InceptionResnetV1
 
+import utils
 
 def load_photo() -> list:
     l = []
@@ -30,17 +31,6 @@ def load_photo() -> list:
 
 
 if __name__ == "__main__":
-    import os
-    import sys
-    import inspect
-
-    # Import from parent directory
-    currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    parentdir = os.path.dirname(currentdir)
-    sys.path.insert(0, parentdir) 
-    import utils
-
-
     mtcnn = MTCNN()
     feauture_generator_model = InceptionResnetV1(pretrained='vggface2').eval()
     

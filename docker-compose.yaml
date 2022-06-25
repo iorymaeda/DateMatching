@@ -1,0 +1,14 @@
+services:
+  torchserve:
+    build: Model/
+    restart: always
+    environment:
+      - TZ=Europe/Moscow
+
+  telegram_userbot:
+    build: Telegram/
+    restart: always
+    environment:
+      - TZ=Europe/Moscow
+  
+  

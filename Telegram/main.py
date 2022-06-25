@@ -7,7 +7,7 @@ from src.executor import execute_commands
 
 
 async def message_executor(client: Client, message:types.Message):
-    messageStorage
+    print(message)
     user: types.User = message.from_user
     if user.id == env.owner:
         await execute_commands(message)
