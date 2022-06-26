@@ -1,16 +1,14 @@
 *.png
 *.jpg
+!img/*
+
 *.pkl
 *.torch
 *.dict
 *.html
 *.session
-*.session-journal
 
 env.py
-
-!img/*
-
 
 serve/
 logs/
