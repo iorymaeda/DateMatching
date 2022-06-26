@@ -43,13 +43,5 @@ Project_dir
 
 ### Todo
 
-* [ ] Torchserve
-  * [ ] Write serve handler
-  * [ ] Deploy model on torchserve container
-* [ ] Telegram part
-  * [ ] Implement predict command
-  * [ ] Deploy telegram user bot on container
-* [ ] Update readme and **usage** 
 * [ ] Improve train pipeline
 * [ ] Improve parse pipeline
-* [ ] Reproducible
