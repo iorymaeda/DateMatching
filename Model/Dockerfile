@@ -13,13 +13,13 @@ WORKDIR /usr/src/app
 
 RUN torch-model-archiver --model-name face_recognition \
 					--version 1.0 \
-					--model-file utils/model.py \
-					--serialized-file Models/w/prod.torch \
-					--handler handler.py \
-					--extra-files Models/pca.pkl -f \
-					--export-path model-store
+					--model-file ./utils/model.py \
+					--serialized-file ./Models/w/prod.torch \
+					--handler ./handler.py \
+					--extra-files ./Models/pca.pkl -f \
+					--export-path ./model-store
 
 
 RUN pip install -r requirements.txt
 RUN chmod a+x ./run.sh
-CMD ["torchserve", "--start", "--ncs", "--model-store model-store", "--models face_recognition"]
+CMD ["torchserve", "--start", "--ncs", "--model-store model-store", "--models face_recognition.mar"]

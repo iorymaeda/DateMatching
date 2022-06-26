@@ -1,14 +1,27 @@
+version: '3'
+
 services:
   torchserve:
     build: Model/
     restart: always
     environment:
       - TZ=Europe/Moscow
-
+    ports:
+      - 8080:8080
+      - 8081:8081
+      - 8082:8082
+    expose:
+      - 8080
+      - 8081
+      - 8082
+      
   telegram_userbot:
     build: Telegram/
     restart: always
     environment:
       - TZ=Europe/Moscow
-  
-  
+      - api_id=
+      - api_hash=
+      - phone_number=
+      - password=
+      - owner=
