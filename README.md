@@ -8,5 +8,7 @@ In this project i build app that choosing girls based on my taste in @leomatchbo
 
 ### Todo
 
-* [ ] Improve train pipeline
-* [ ] Improve parse pipeline
+* [ ] improve train pipeline
+* [ ] update model over time in another one container
+* [ ] improve parse pipeline
+* [ ] automaticly collect data from telegeram 
