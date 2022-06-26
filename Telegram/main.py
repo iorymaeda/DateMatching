@@ -8,9 +8,6 @@ from src.executor import execute_commands
 
 async def message_executor(client: Client, message:types.Message):
     print(message)
-    user: types.User = message.from_user
-    if user.id == env.owner:
-        await execute_commands(message)
 
 
 async def deleted_message_executor(client: Client, messages: list[types.Message]):

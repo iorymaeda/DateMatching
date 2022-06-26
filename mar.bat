@@ -1,1 +1,0 @@
-torch-model-archiver --model-name inception_resnet --version 1.0 --model-file utils/model.py --serialized-file Models/w/prod.torch --handler Torchserve/handler.py --extra-files Models/pca.pkl -f

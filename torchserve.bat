@@ -1,1 +1,0 @@
-torchserve --start --ncs --model-store Torchserve/model-store  --models inception_resnet
