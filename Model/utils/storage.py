@@ -6,10 +6,13 @@ import numpy as np
 
 
 class PhotoEmbedingStorage:
-    """This storage class contains 
-    primary photo path+name: generated unique id 
-    generated unique id: [model1 embeddings, ..., modelN embeddings]
-    useful for dataset modification
+    """This storage class contains:
+    generated unique id: list of embeddings
+    generated unique id: list of face detected information
+
+    All prepared photos storage in `data/outputs/` with unique id.
+    All raw photos storage in `data/target/` or `data/opposite` with unique id
+    useful for dataset modification and handmade markups - just move photos from opposite to target or from target to opposite
     """
     def __init__(self, path=None):
         self.path = path
@@ -20,7 +23,8 @@ class PhotoEmbedingStorage:
         
         if path:
             self.load()
-    
+
+
     def save(self, path=None):
         "Save storage to path"
         if path is None:

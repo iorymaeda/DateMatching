@@ -34,11 +34,11 @@ if __name__ == "__main__":
     mtcnn = MTCNN()
     feauture_generator_model = InceptionResnetV1(pretrained='vggface2').eval()
     
-    checkpoint = torch.load('../Models/w/prod.torch', map_location=torch.device('cpu'))
+    checkpoint = torch.load('Train/weights/w/prod.torch', map_location=torch.device('cpu'))
     classification_model = utils.Model(32, [64, 64]).eval()
     classification_model.load_state_dict(checkpoint['model'])
 
-    with open("../Models/pca.pkl", 'rb') as f:
+    with open("Train/weights/pca.pkl", 'rb') as f:
         pca: PCA = pickle.load(f)
 
 
