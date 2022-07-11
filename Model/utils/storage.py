@@ -1,25 +1,22 @@
 import pickle
-
-import torch
 import numpy as np
 
 
-
-class PhotoEmbedingStorage:
-    """This storage class contains:
-    generated unique id: list of embeddings
-    generated unique id: list of face detected information
-
-    All prepared photos storage in `data/outputs/` with unique id.
-    All raw photos storage in `data/target/` or `data/opposite` with unique id
+class EmbedingStorage:
+    """This storage class contains face id and embeddings
+    All prepared photos storage in `data/target/` or `data/opposite` with unique id.
     useful for dataset modification and handmade markups - just move photos from opposite to target or from target to opposite
     """
     def __init__(self, path=None):
         self.path = path
-        self.emb_num: int = 0
-        self.path_id: dict[str, int] = {}
-        self.id_path: dict[int, str] = {}
-        self.id_embs: dict[int, np.ndarray] = {}
+        self.id_path: dict[int, str] = {} # id -> path
+        self.id_embs: dict[int, np.ndarray] = {} # id -> face embedding
+        
+        self.id_pid: dict[int, int] = {} # id -> person id 
+        self.name_pid: dict[int, int] = {} # person name -> person id
+        self.pid_name: dict[int, int] = {} # person id -> person name
+        
+        
         
         if path:
             self.load()
@@ -35,10 +32,11 @@ class PhotoEmbedingStorage:
 
         with open(path, 'wb') as f:
             pickle.dump({
-                'path_id': self.path_id,
                 'id_path': self.id_path,
                 'id_embs': self.id_embs,
-                'emb_num': self.emb_num,
+                'id_pid': self.id_pid,
+                'name_pid': self.name_pid,
+                'pid_name': self.pid_name,
             }, f)
             
                 
@@ -52,84 +50,80 @@ class PhotoEmbedingStorage:
     
         with open(path, 'rb') as f:
             loaded_dict = pickle.load(f)
-            self.path_id = loaded_dict['path_id']
             self.id_path = loaded_dict['id_path']
             self.id_embs = loaded_dict['id_embs']
-            self.emb_num = loaded_dict['emb_num']
+            self.id_pid = loaded_dict['id_pid']
+            self.name_pid = loaded_dict['name_pid']
+            self.pid_name = loaded_dict['pid_name']
             
             
-    def __generate_id(self) -> int:
-        return len(self.path_id)
+    def __generate_emb_id(self) -> int:
+        return len(self.id_path)
     
     
-    def __setitem__(self, key: str, value: list[np.ndarray|torch.Tensor]):
+    def __generate_person_id(self, person:str) -> int:
+        person = person.lower()
+        
+        if person in self.name_pid:
+            return self.name_pid[person]
+        else:
+            return len(self.name_pid)
+    
+    
+    def __setitem__(self, key: str, value: list[np.ndarray, str]):
         """Put embeddings in storage
         :param key: primary photo path+name
-        :param value: list with embeddings from models
+        :param value: list with embeddings from models and person name
+            `noname` if there no name
         """
+        
+        assert isinstance(value, list)
+        if len(value) == 1: value.append('noname')
+        assert len(value) == 2
         assert isinstance(key, str)
         assert isinstance(value, list)
         
-        for emb in value:
-            assert isinstance(emb, (np.ndarray, torch.Tensor))
+        emb, name = value
+        assert isinstance(emb, np.ndarray)
+        assert isinstance(name, str)
         
-        # Check how many we have embeddings per sample
-        if self.emb_num:
-            assert len(value) == self.emb_num
-        else:
-            self.emb_num = len(value)
-            
-        uid = self.__generate_id()
-        self.path_id[key] = uid
-        self.id_path[uid] = key
-        self.id_embs[uid] = value
+        eid = self.__generate_emb_id()
+        pid = self.__generate_person_id(name)
         
+        self.cached_id = eid
+        
+        self.id_path[eid] = key
+        self.id_embs[eid] = emb
+        
+        self.id_pid[eid] = pid
+        self.pid_name[pid] = name
+        self.name_pid[name] = pid
     
-    def __getitem__(self, item: tuple[int|str, int]) -> np.ndarray:
+    
+    def __getitem__(self, item: int) -> np.ndarray:
         """Get embeddings from storage
-        if item is tuple, there are key and n
-        :param key: id or primary path
-        :param n: since we have different embeddings
-            from different models, this argument responsible 
-            for number of returned embedding, N - embedding from N+1 model.
-            default: 0
+        :param key: id 
         """
-        if isinstance(item, tuple):
-            key, n = item
-        else:
-            key, n = item, 0
+        if isinstance(item, int):
+            return self.id_embs[item]
         
-        if isinstance(key, int):
-            return self.id_embs[key][n]
-        
-        elif isinstance(key, str):
-            uid = self.path_id[key]
-            return self.id_embs[uid][n]
+        elif isinstance(item, slice):
+            _arr = np.concatenate(list(self.id_embs.values()))
+            return _arr[item]
         
         else:
-            raise TypeError(f'Dont understand key type: {type(key)}')
+            raise TypeError(f'Dont understand key type: {type(item)}')
             
 
     def __len__(self) -> int:
-        return len(self.path_id)
+        return len(self.id_path)
     
     
     def __repr__(self):
-        msg = f"number of semples: {len(self)}\n"
-        msg+= f"number of embeddings: {self.emb_num}" 
+        msg = f"number of semples: {len(self)}\nnumber of persons: {len(self.name_pid)}"
         return msg
 
 
     def __str__(self):
-        msg = f"number of semples: {len(self)}\n"
-        msg+= f"number of embeddings: {self.emb_num}" 
-        
-        if self.path_id:
-            msg+= "\n"
-            
-        for key in self.path_id:
-            msg+= f"{self.path_id[key]}: {key}"
-            msg+= "\n"
+        msg = f"number of semples: {len(self)}\nnumber of persons: {len(self.name_pid)}"
         return msg
-
-

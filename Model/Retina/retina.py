@@ -9,6 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import numpy as np
 import tensorflow as tf
 import cv2
+from PIL import Image
 # This comes with deepface!
 from retinaface.model import retinaface_model
 from retinaface.commons import preprocess, postprocess
@@ -29,15 +30,16 @@ from .types import Landmarks, Face
 #---------------------------
 
 class RetinaFace:
-    def __init__(self):
+    def __init__(self, normalize=True):
         self.model = None
+        self.normalize = normalize
         self.build_model()
     
-    def __call__(self, img_path:str) -> list[np.ndarray]:
+    def __call__(self, img_path:str, target_size=(224, 224)) -> list[np.ndarray]:
         img = self.get_image(img_path)
         obj = self.detect_faces(img)
         imgs = self.extract_faces(img, obj)
-        imgs = [self.postprocces(img) for img in imgs]
+        imgs = [self.postprocces(img, target_size=target_size) for img in imgs]
         return imgs
     
     
@@ -54,13 +56,22 @@ class RetinaFace:
         if type(img_path) == str:  # Load from file path
             if not os.path.isfile(img_path):
                 raise ValueError(f"Input image file path ({img_path}) does not exist.")
+
+            # ----------------------------------------
+            # PIL is suck and detection is not working
+            # img = Image.open(img_path)
+            # img = img.convert('RGB')
+            # # to BGR
+            # img = np.array(img)[..., ::-1]
+            # ----------------------------------------
+
             img = cv2.imread(img_path)
 
         elif isinstance(img_path, np.ndarray):  # Use given NumPy array
             img = img_path.copy()
 
         else:
-            raise ValueError("Invalid image input. Only file paths or a NumPy array accepted.")
+            raise ValueError(f"Invalid image input. Only file paths or a NumPy array accepted. Got {type(img_path)}")
 
         # Validate image shape
         if len(img.shape) != 3 or np.prod(img.shape) == 0:
@@ -199,20 +210,21 @@ class RetinaFace:
         
         imgs = []
         for identity in faces_obj:
-            facial_area = identity["facial_area"]
-            facial_img = img[facial_area[1]: facial_area[3], facial_area[0]: facial_area[2]]
+            if identity:
+                facial_area = identity["facial_area"]
+                facial_img = img[facial_area[1]: facial_area[3], facial_area[0]: facial_area[2]]
 
-            if align == True:
-                landmarks = identity["landmarks"]
-                left_eye = landmarks["left_eye"]
-                right_eye = landmarks["right_eye"]
-                nose = landmarks["nose"]
-                mouth_right = landmarks["mouth_right"]
-                mouth_left = landmarks["mouth_left"]
+                if align == True:
+                    landmarks = identity["landmarks"]
+                    left_eye = landmarks["left_eye"]
+                    right_eye = landmarks["right_eye"]
+                    nose = landmarks["nose"]
+                    mouth_right = landmarks["mouth_right"]
+                    mouth_left = landmarks["mouth_left"]
 
-                facial_img = postprocess.alignment_procedure(facial_img, right_eye, left_eye, nose)
+                    facial_img = postprocess.alignment_procedure(facial_img, right_eye, left_eye, nose)
 
-            imgs.append(facial_img[:, :, ::-1])
+                imgs.append(facial_img[:, :, ::-1])
             
         return imgs
     
@@ -264,9 +276,10 @@ class RetinaFace:
         #---------------------------------------------------
 
         #normalizing the image pixels
-
-        img_pixels = img.astype('float32')
-        img_pixels /= 255 #normalize input in [0, 1]
+        if self.normalize:
+            img = img.astype('float32')
+            #normalize input in [0, 1]
+            img /= 255 
 
         #---------------------------------------------------
-        return img_pixels
+        return img

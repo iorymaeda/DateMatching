@@ -9,6 +9,11 @@ from instagrapi import Client
 
 import config
 
+def webp_to_png(r: pathlib.WindowsPath):
+    if isinstance(r, pathlib.WindowsPath):
+        if r.suffix == '.webp': r.rename(r.with_suffix('.png'))
+    else:
+        raise ValueError
 
 def download(medias: list):
     num_batches = len(medias)//config.batch_size + int(len(medias)%config.batch_size != 0)
@@ -25,7 +30,12 @@ def download(medias: list):
                 tasks.append(task)
             
             
-        [t.result() for t in tasks]
+        for r in [t.result() for t in tasks]:
+            if isinstance(r, list):
+                for _r in r:
+                    webp_to_png(_r)
+            else:
+                webp_to_png(r)
         
         passed_time = time.time() - time_start
         if passed_time < config.timeout:
